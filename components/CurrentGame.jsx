@@ -1,5 +1,6 @@
 import React from 'react'
 import "./CurrentGame.css"
+import Button from '@mui/material/Button';
 
 const Game = ({ endGame }) => {
   return (
@@ -8,24 +9,33 @@ const Game = ({ endGame }) => {
         <span>Pontuação: 000</span>
       </p>
       <h1>Adivinhe a palavra</h1>
-      <h3 className='tip'>
-        Dica sobre a palavra : <span>Dica....</span>
+      <h3 className='tiph3'>
+        Dica
       </h3>
+      <div className='tip'>
+        <span>Dica</span>
+      </div>
       <div className='wordContainer'>
-        <span className='letter'>A</span>
-        <span className='blankSquare'>A</span>
+        <span className='letter'>T</span>
+        <span className='blankSquare'>E</span>
+        <span className='letter'>S</span>
+        <span className='letter'>T</span>
+        <span className='letter'>E</span>
       </div>
       <div className='letterContainer'>
-        <p>Tente adivinhar uma letra da palavra:</p>
         <form>
-          <input type="text" name='letter' maxLength={1} required ></input>
-          <button>JOGAR!</button>
+          <input placeholder="Guess a word" type="text" name='letter' maxLength={1} required ></input>
+          <button className="button-3" role="button">Guess</button>
         </form>
       </div>
       <div className='wrongLettersContainer'>
-        <p>Letras já utilizadas</p>
-        <span>a,</span>
-        <span>b,</span>
+        <div className='wrongTable'><p>Letras já utilizadas</p>
+          <span className='wrongLetter'>a</span>
+          <span className='wrongLetter'>b</span>
+          <span className='wrongLetter'>e</span>
+          <span className='wrongLetter'>f</span>
+          <span className='wrongLetter'>g</span>
+          <span className='wrongLetter'>h</span></div>
       </div>
 
     </div>
