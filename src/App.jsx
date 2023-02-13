@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-/* CSS */
+// CSS
 import './App.css'
 import StartingScreen from '../components/StartingScreen'
 import CurrentGame from '../components/CurrentGame'
