@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import "./CurrentGame.css"
 
-const Game = ({ endGame, pickedWord, pickedCategory, letters, wrongLetters, guessedLetters, guesses, score }) => {
+const Game = ({ verifyLetter, pickedWord, pickedCategory, letters, wrongLetters, guessedLetters, guesses, score }) => {
   const [letter, setLetter] = useState("")
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    endGame(letter);
+  const letterInputRef = useRef(null)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    verifyLetter(letter);
+    setLetter("");
+    letterInputRef.current.focus()
   };
   return (
     <div className='game'>
@@ -31,9 +34,9 @@ const Game = ({ endGame, pickedWord, pickedCategory, letters, wrongLetters, gues
         ))}
       </div>
       <div className='letterContainer'>
-        <form>
+        <form onSubmit={handleSubmit}>
           <input
-            onSubmit={handleSubmit}
+            ref={letterInputRef}
             onChange={(e) =>
               setLetter(e.target.value)}
             value={letter} placeholder="Guess a word" type="text" name='letter' maxLength={1} required ></input>
