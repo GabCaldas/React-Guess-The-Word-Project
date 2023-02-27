@@ -39,7 +39,7 @@ const Game = ({ verifyLetter, pickedWord, pickedCategory, letters, wrongLetters,
             ref={letterInputRef}
             onChange={(e) =>
               setLetter(e.target.value)}
-            value={letter} placeholder="Guess a word" type="text" name='letter' maxLength={1} required ></input>
+            value={letter} type="text" name='letter' maxLength={1} required ></input>
           <button className="button-3" role="button">Guess</button>
         </form>
       </div>

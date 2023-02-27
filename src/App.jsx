@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useEffect } from 'react'
+import { useCallback } from 'react'
 
 // CSS
 import './App.css'
@@ -17,6 +19,7 @@ const stages = [
 
 ];
 
+const guessesNumber = 3
 
 function App() {
   const [gameStage, setGameStage] = useState(stages[0].name);
@@ -27,7 +30,7 @@ function App() {
   const [letters, setLetters] = useState([])
 
 
-  const pickWordAndCategory = () => {
+  const pickWordAndCategory = useCallback(() => {
     // PICK A RANDOM CATEGORY 
     const categories = Object.keys(words);
     const category =
@@ -38,13 +41,13 @@ function App() {
     console.log(word)
 
     return { word, category }
-  }
+  }, [words])
 
 
   //START THE GAME
-  const startGame = () => {
+  const startGame = useCallback(() => {
+    clearLetterStates()
 
-    setGameStage(stages[1].name)
     // PICK WORD AND CATEGORY
     const { word, category } = pickWordAndCategory()
 
@@ -60,14 +63,15 @@ function App() {
     setPickedWord(word)
     setPickedCategory(category)
     setLetters(wordLetters)
+    setGameStage(stages[1].name)
+  }, [pickWordAndCategory])
 
-  }
 
 
 
   const [guessedLetters, setGuessedLetters] = useState([])
   const [wrongLetters, setWrongLetters] = useState([])
-  const [guesses, setGuesses] = useState(3)
+  const [guesses, setGuesses] = useState(guessesNumber)
   const [score, setScore] = useState(0)
   //PROCESS THE LETTER INPUT 
   const verifyLetter = (letter) => {
@@ -92,12 +96,50 @@ function App() {
         ...actualWrongLetters,
         normalizedLetter,
       ]);
+
+      setGuesses((actualGuesses) => actualGuesses - 1)
     }
   };
-  console.log(guessedLetters)
-  console.log(wrongLetters)
+
+  const clearLetterStates = () => {
+    setGuessedLetters([""]);
+    setWrongLetters([]);
+  }
+
+  //  CHECK LOSE CONDITION
+  useEffect(() => {
+    if (guesses <= 0) {
+      // reset all states
+      setGameStage(stages[2].name)
+      clearLetterStates();
+    }
+  }, [guesses]);
+
+
+  // CHECK WIN CONDITION
+  useEffect(() => {
+
+    const uniqueLetters = [... new Set(letters)]
+
+    if (guessedLetters.length === uniqueLetters.length) {
+      setScore((actualScore) => actualScore += 100)
+
+      startGame()
+    }
+
+
+
+  }, [guessedLetters, letters, startGame])
+
+
+
+
+
+
   //RESTART THE GAME
   const tryAgain = () => {
+    setScore(0)
+    setGuesses(guessesNumber)
     setGameStage(stages[0].name)
   }
 
@@ -113,7 +155,7 @@ function App() {
         guesses={guesses}
         letters={letters}
         score={score} />}
-      {gameStage === "end" && <GameOver tryAgain={tryAgain} />}
+      {gameStage === "end" && <GameOver tryAgain={tryAgain} score={score} />}
     </div>
   )
 }
