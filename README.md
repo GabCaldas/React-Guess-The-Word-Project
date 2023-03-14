@@ -1,5 +1,5 @@
 # React-Guess-The-Word-Project
-<p>
+<p align="center">
   <img src="/.github/Guessgif.gif">
 <p>
 
