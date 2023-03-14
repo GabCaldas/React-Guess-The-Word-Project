@@ -1,4 +1,4 @@
-# React-Guess-The-Word-Project
+# <h1 align="center">React-Guess-The-Word-Project<h1>
 <p align="center">
   <img src="/.github/Guessgif.gif">
 <p>
